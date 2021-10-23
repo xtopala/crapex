@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
 
     public bool invertLook;
 
+    public float moveSpeed = 5f;
+    private Vector3 moveDir, movement;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,9 +33,18 @@ public class PlayerController : MonoBehaviour
         if (invertLook)
         {
             viewPoint.rotation = Quaternion.Euler(verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
-        } else
+        }
+        else
         {
             viewPoint.rotation = Quaternion.Euler(-verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
         }
+
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        moveDir = new Vector3(horizontal, 0f, vertical);
+
+        movement = ((transform.forward * moveDir.z) + (transform.right * moveDir.x)).normalized;
+
+        transform.position += movement * moveSpeed * Time.deltaTime;
     }
 }
