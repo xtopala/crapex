@@ -21,5 +21,10 @@ public class PlayerController : MonoBehaviour
         mouseInput = new Vector2(xPos, yPos) * mouseSensitivity;
 
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + mouseInput.x, transform.rotation.eulerAngles.z);
+
+        verticalRotStore -= mouseInput.y;
+        verticalRotStore = Mathf.Clamp(verticalRotStore, -60, 60);
+        
+        viewPoint.rotation = Quaternion.Euler(verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
     }
 }
