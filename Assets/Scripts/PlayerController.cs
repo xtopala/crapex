@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
 
     public bool invertLook;
 
-    public float moveSpeed = 5f;
+    public float moveSpeed = 5f, runSpeed = 8f;
+    private float activeMoveSpeed;
     private Vector3 moveDir, movement;
 
     public CharacterController charCon;
@@ -45,8 +46,17 @@ public class PlayerController : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         moveDir = new Vector3(horizontal, 0f, vertical);
 
-        movement = ((transform.forward * moveDir.z) + (transform.right * moveDir.x)).normalized;
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            activeMoveSpeed = runSpeed;
+        }
+        else
+        {
+            activeMoveSpeed = moveSpeed;
+        }
 
-        charCon.Move(movement * moveSpeed * Time.deltaTime);
+        movement = ((transform.forward * moveDir.z) + (transform.right * moveDir.x)).normalized * activeMoveSpeed;
+
+        charCon.Move(movement * Time.deltaTime);
     }
 }
