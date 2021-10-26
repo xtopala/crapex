@@ -169,7 +169,6 @@ public class PlayerController : MonoBehaviour
             heatCounter = maxHeat;
             isOverHeated = true;
 
-            Debug.Log("Found: " + UIController.instance.gameObject.name);
             UIController.instance.overheatedMessage.gameObject.SetActive(true);
         }
     }
