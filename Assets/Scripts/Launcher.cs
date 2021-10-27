@@ -9,6 +9,9 @@ public class Launcher : MonoBehaviourPunCallbacks
     public GameObject loadingScreen, menuButtons;
     public TMP_Text loadingText;
 
+    public GameObject createRoomScreen;
+    public TMP_InputField roomNameInput;
+
     private void Awake()
     {
         instance = this;
@@ -40,5 +43,12 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         loadingScreen.SetActive(false);
         menuButtons.SetActive(false);
+        createRoomScreen.SetActive(false);
+    }
+
+    public void OpenRoomCreate()
+    {
+        CloseMenus();
+        createRoomScreen.SetActive(true);
     }
 }
