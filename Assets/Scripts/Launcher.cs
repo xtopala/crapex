@@ -1,6 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
+using Photon.Realtime;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
@@ -50,5 +51,20 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         CloseMenus();
         createRoomScreen.SetActive(true);
+    }
+
+    public void CreateRoom()
+    {
+        if (!string.IsNullOrEmpty(roomNameInput.text))
+        {
+            RoomOptions options = new RoomOptions();
+            options.MaxPlayers = 8;
+
+            PhotonNetwork.CreateRoom(roomNameInput.text, options);
+
+            CloseMenus();
+            loadingText.text = "Creating Room ...";
+            loadingScreen.SetActive(true);
+        }
     }
 }
