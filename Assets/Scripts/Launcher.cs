@@ -112,6 +112,19 @@ public class Launcher : MonoBehaviourPunCallbacks
             allPlayerNames.Add(newPlayerLabel);
         }
     }
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        TMP_Text newPlayerLabel = Instantiate(playerNameLabel, playerNameLabel.transform.parent);
+        newPlayerLabel.text = newPlayer.NickName;
+        newPlayerLabel.gameObject.SetActive(true);
+
+        allPlayerNames.Add(newPlayerLabel);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        ListAllPlayers();
+    }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
