@@ -29,6 +29,9 @@ public class Launcher : MonoBehaviourPunCallbacks
     public TMP_InputField nameInput;
     private bool hasSetNickname;
 
+    public string levelToPlay;
+    public GameObject startButton;
+
     private void Awake()
     {
         instance = this;
@@ -58,6 +61,9 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
+
+        PhotonNetwork.AutomaticallySyncScene = true;
+
         loadingText.text = "Joining Loby ...";
     }
 
@@ -112,6 +118,15 @@ public class Launcher : MonoBehaviourPunCallbacks
 
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
         ListAllPlayers();
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            startButton.SetActive(true);
+        }
+        else
+        {
+            startButton.SetActive(false);
+        }
     }
 
     private void ListAllPlayers()
@@ -232,6 +247,10 @@ public class Launcher : MonoBehaviourPunCallbacks
 
             hasSetNickname = true;
         }
+    }
+    public void StartGame()
+    {
+        PhotonNetwork.LoadLevel(levelToPlay);
     }
 
     public void QuitGame()
