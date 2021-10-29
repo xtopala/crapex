@@ -248,6 +248,19 @@ public class Launcher : MonoBehaviourPunCallbacks
             hasSetNickname = true;
         }
     }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            startButton.SetActive(true);
+        }
+        else
+        {
+            startButton.SetActive(false);
+        }
+    }
+
     public void StartGame()
     {
         PhotonNetwork.LoadLevel(levelToPlay);
