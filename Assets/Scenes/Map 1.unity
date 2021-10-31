@@ -2849,6 +2849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06dd555df43fb2c48a742056b2b402e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathEffect: {fileID: 5569239007590585767, guid: 9b57b7ebafd54684d90cd0d3365ee2de, type: 3}
   playerPrefab: {fileID: 411253715468471002, guid: 52debb22b1768c74788e0e5ad3ddab91, type: 3}
 --- !u!4 &1999395178
 Transform:
