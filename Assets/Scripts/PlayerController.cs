@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public Gun[] allGuns;
     private int selectedGun;
 
+    public GameObject playerHitImpact;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -202,8 +204,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            GameObject bulletImpactObject = Instantiate(bulletImpact, hit.point + (hit.normal * .002f), Quaternion.LookRotation(hit.normal, Vector3.up));
-            Destroy(bulletImpactObject, 8f);
+            if (hit.collider.gameObject.CompareTag("Player"))
+            {
+                Debug.Log("Hit " + hit.collider.gameObject.GetPhotonView().Owner.NickName);
+                PhotonNetwork.Instantiate(playerHitImpact.name, hit.point, Quaternion.identity);
+            }
+            else
+            {
+                GameObject bulletImpactObject = Instantiate(bulletImpact, hit.point + (hit.normal * .002f), Quaternion.LookRotation(hit.normal, Vector3.up));
+                Destroy(bulletImpactObject, 8f);
+            }
         }
 
         shotCounter = allGuns[selectedGun].timeBetweenShots;
