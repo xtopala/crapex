@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         SwitchGun();
 
         currentHealth = maxHealth;
+        UIController.instance.healthSlider.maxValue = maxHealth;
+        UIController.instance.healthSlider.value = currentHealth;
     }
 
     // Update is called once per frame
@@ -254,6 +256,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 currentHealth = 0;
                 PlayerSpawner.instance.Die(damager);
             }
+
+            UIController.instance.healthSlider.value = currentHealth;
         }
     }
 
