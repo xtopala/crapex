@@ -1974,7 +1974,7 @@ GameObject:
   - component: {fileID: 830306796}
   - component: {fileID: 830306795}
   m_Layer: 0
-  m_Name: MatchManager
+  m_Name: Match Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1992,6 +1992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e68c7b5f1e0f22b49898fcd7ff09393d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allPlayers: []
 --- !u!4 &830306796
 Transform:
   m_ObjectHideFlags: 0
