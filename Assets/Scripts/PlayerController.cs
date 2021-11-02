@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private int currentHealth;
 
     public Animator anim;
+    public GameObject playerModel;
+    public Transform modelGunPoint, gunHolder;
 
     // Start is called before the first frame update
     void Start()
@@ -56,8 +58,18 @@ public class PlayerController : MonoBehaviourPunCallbacks
         SwitchGun();
 
         currentHealth = maxHealth;
-        UIController.instance.healthSlider.maxValue = maxHealth;
-        UIController.instance.healthSlider.value = currentHealth;
+        
+        if (photonView.IsMine)
+        {
+            playerModel.SetActive(false);
+            UIController.instance.healthSlider.maxValue = maxHealth;
+            UIController.instance.healthSlider.value = currentHealth;
+        } else
+        {
+            gunHolder.parent = modelGunPoint;
+            gunHolder.localPosition = Vector3.zero;
+            gunHolder.localRotation = Quaternion.identity;
+        }
     }
 
     // Update is called once per frame
