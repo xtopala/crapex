@@ -194,6 +194,11 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
                     UpdateStatsDisplay();
                 }
 
+                if (UIController.instance.leaderboard.activeInHierarchy)
+                {
+                    ShowLeaderboard();
+                }
+
                 break;
             }
         }
