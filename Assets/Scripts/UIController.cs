@@ -19,6 +19,8 @@ public class UIController : MonoBehaviour
     public GameObject leaderboard;
     public LeaderboardPlayer leaderboardPlayerDisplay;
 
+    public GameObject endScreen;
+
     private void Awake()
     {
         instance = this;
