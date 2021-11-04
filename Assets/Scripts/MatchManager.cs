@@ -21,6 +21,18 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         UpdateStats,
     }
 
+    public enum GameState
+    {
+        Waiting,
+        Playing,
+        Ending,
+    }
+
+    public int killsToWin = 3;
+    public Transform mapCamPoint;
+    public GameState state = GameState.Waiting;
+    public float waitAfterEnding = 5f;
+
     private void Awake()
     {
         instance = this;
@@ -35,12 +47,14 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         else
         {
             NewPlayerSend(PhotonNetwork.NickName);
+
+            state = GameState.Playing;
         }
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && state != GameState.Ending)
         {
             if (UIController.instance.leaderboard.activeInHierarchy)
             {
@@ -113,7 +127,10 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void ListPlayersSend()
     {
-        object[] package = new object[allPlayers.Count];
+        object[] package = new object[allPlayers.Count + 1];
+
+        package[0] = state;
+
         for (int i = 0; i < allPlayers.Count; i++)
         {
             object[] piece = new object[4];
@@ -122,7 +139,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
             piece[2] = allPlayers[i].kills;
             piece[3] = allPlayers[i].deaths;
 
-            package[i] = piece;
+            package[i + 1] = piece;
         }
 
         PhotonNetwork.RaiseEvent(
@@ -136,7 +153,9 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public void ListPlayersReceive(object[] dataReceived)
     {
         allPlayers.Clear();
-        for (int i = 0; i < dataReceived.Length; i++)
+
+        state = (GameState)dataReceived[0];
+        for (int i = 1; i < dataReceived.Length; i++)
         {
             object[] piece = (object[])dataReceived[i];
             PlayerInfo player = new PlayerInfo(
@@ -150,7 +169,7 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
             if (PhotonNetwork.LocalPlayer.ActorNumber == player.actor)
             {
-                index = i;
+                index = i - 1;
             }
         }
     }
@@ -202,6 +221,8 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 break;
             }
         }
+
+        ScoreCheck();
     }
 
     public void UpdateStatsDisplay()
@@ -267,6 +288,33 @@ public class MatchManager : MonoBehaviourPunCallbacks, IOnEventCallback
         }
 
         return sorted;
+    }
+
+    public override void OnLeftRoom()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    void ScoreCheck()
+    {
+        bool winnerFound = false;
+        foreach (PlayerInfo player in allPlayers)
+        {
+            if (player.kills >= killsToWin && killsToWin > 0)
+            {
+                winnerFound = true;
+                break;
+            }
+        }
+
+        if (winnerFound)
+        {
+            if (PhotonNetwork.IsMasterClient && state != GameState.Ending)
+            {
+                state = GameState.Ending;
+                ListPlayersSend();
+            }
+        }
     }
 }
 
