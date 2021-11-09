@@ -189,6 +189,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &621558243 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 621558243, guid: 500f52424454aab49a87c485342ff6f5, type: 3}
+  m_PrefabInstance: {fileID: 7417553212517479160}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2869,6 +2880,10 @@ PrefabInstance:
       propertyPath: mapCamPoint
       value: 
       objectReference: {fileID: 1292873098}
+    - target: {fileID: 2556286392821750984, guid: 83a92fa86f621504dbf526d2f9907750, type: 3}
+      propertyPath: matchLength
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 2556286392821750985, guid: 83a92fa86f621504dbf526d2f9907750, type: 3}
       propertyPath: m_Name
       value: Match Manager
@@ -7171,6 +7186,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7417553212778125610, guid: 500f52424454aab49a87c485342ff6f5, type: 3}
+      propertyPath: timerText
+      value: 
+      objectReference: {fileID: 621558243}
     - target: {fileID: 7417553212778125614, guid: 500f52424454aab49a87c485342ff6f5, type: 3}
       propertyPath: m_Pivot.x
       value: 0
